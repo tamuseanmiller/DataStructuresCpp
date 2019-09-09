@@ -14,18 +14,27 @@ class Stack {
     unsigned int capacity;
     unsigned int len;
 
+    // doubles the capacity of the array
     void grow() {
         capacity *= 2;
         T *newA = new T[capacity];
+        
+        // After creating a new array ^ copied the old array over
         for (unsigned int i = 0; i < len; i++) {
             newA[i] = A[i];
         }
+        
+        // Zeros out the values after length
         for (unsigned int i = len; i < capacity; i++) {
             newA[i] = {};
         }
+        
+        // Zeros out the old array
         for (unsigned int i = 0; i < len; i++) {
             A[i] = {};
         }
+        
+        // Deletes the old memory on the heap
         delete[] A;
         A = newA;
     };
@@ -33,6 +42,7 @@ class Stack {
 public:
     Stack() : A(new T[1]), capacity(1), len(0) {};
 
+    // Copy contructor
     Stack(const Stack &stack) {
         capacity = stack.capacity;
         A = new T[capacity];
@@ -42,15 +52,20 @@ public:
         }
     }
 
+    // Destructor
     ~Stack() {
+        // Zeros out array
         for (unsigned int i = 0; i < capacity; i++) {
             A[i] = {};
         }
         delete[] A;
+        
+        // Resets capacity and length
         capacity = 0;
         len = 0;
     };
 
+    // Overloads the equals operator
     Stack &operator=(const Stack stack) {
         capacity = stack.capacity;
         len = stack.len;
@@ -72,16 +87,19 @@ public:
         return *this;
     }
 
+    // pop gets the top value on the stack and removes it
     T pop() {
         T val = A[--len];
         A[len] = {};
         return val;
     };
 
+    // returns the length of the array (not capacity)
     int size() {
         return len;
     }
 
+    // push places new value on top of stack
     T push(T val) {
         if (len == capacity) {
             grow();
