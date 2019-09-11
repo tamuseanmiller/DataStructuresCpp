@@ -107,10 +107,12 @@ public:
         A[len++] = val;
     }
 
+    // Returns the value on top of the stack
     T peek() {
         return A[len - 1];
     }
 
+    // Clears out the stack...
     void clear() {
         for (int i = 0; i < len; i++) {
             A[i] = {};
@@ -118,6 +120,7 @@ public:
         len = 0;
     }
 
+    // Returns true if the stack has no elements
     bool isEmpty() {
         if (len == 0) {
             return true;
@@ -125,6 +128,7 @@ public:
         return false;
     }
 
+    // Iterates through stack and returns true if val is contained within
     bool contains(T val) {
         for (int i = 0; i < len; i++) {
             if (A[i] == val) {
